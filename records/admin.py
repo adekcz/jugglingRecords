@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import *
+
+myModels = [Record, UserProfile, RecordCategory]  # iterable list
+
+admin.site.register(myModels)
