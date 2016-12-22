@@ -10,7 +10,7 @@ class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
     info_url = models.URLField()
     def __str__(self):
-        return self.user
+        return self.user.username
 
 
 class RecordCategory(models.Model):
@@ -33,7 +33,7 @@ class RecordCategory(models.Model):
     pattern = models.CharField(max_length=200)
 
     def __str__(self):
-        return str(prop_count) + " " +  str(prop) + " " + str(pattern)
+        return str(self.prop_count) + " " +  str(self.prop) + " " + str(self.pattern)
     
 class Record(models.Model):
     user = models.ForeignKey(User)
@@ -44,5 +44,5 @@ class Record(models.Model):
     catches = models.IntegerField(default=None, blank=True, null=True)
     endurance_time = models.DurationField(default=None, blank=True, null=True)
     def __str__(self):
-        return str(user) + " " +  str(category) + " " + str(endurance_time)
+        return str(self.user.username) + " " +  str(self.category) + " " + str(self.endurance_time)
 
