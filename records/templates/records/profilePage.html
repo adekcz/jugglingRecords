@@ -1,0 +1,48 @@
+<div>
+ {{ userProfile.user.first_name }} 
+ {{ userProfile.user.last_name }} 
+</div>
+<div>
+ {{ userProfile.user.name }} 
+</div>
+<div>
+    <a href="{{ userProfile.info_url }}">
+        more about {{ userProfile.user.username }} 
+    </a>
+</div>
+<div>
+    <button type="button">hide beaten entries</button>
+    <button type="button">hide unofficial entries</button>
+</div>
+<table>
+    {% for record in records %}
+    <tr>
+        <td>
+            <a href="/records/TBD">
+            {{ record.category }}
+            </a>
+        </td>
+        <td>
+            <a href="{{record.url_to_proof}}">
+            {{ record.endurance_time }}
+            </a>
+        </td>
+        <td>
+            {{ record.record_happened }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!---
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+        <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}>
+--!>
+
