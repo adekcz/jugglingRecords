@@ -4,7 +4,16 @@ from django.template import loader
 from .models import UserProfile, Record, RecordCategory
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    categories = RecordCategory.objects.all()
+    worldRecords = []
+    for category1 in categories:
+        worldRecords.append(Record.objects.filter(category=category1).order_by('endurance_time')[0])
+    template = loader.get_template("records/index.html")
+    context = { 
+            "records": worldRecords }
+
+    return HttpResponse(template.render(context, request))
+
 
 def profilePage(request, param):
     print(param)
@@ -22,7 +31,7 @@ def profilePage(request, param):
 def recordCategoryPage(request, propParam, propCountParam, patternParam):
     print("\n'n'nBBB\n\n\n")
     #todo validate
-    
+
     category1 = RecordCategory.objects.get(prop=propParam, prop_count=int(propCountParam), pattern=patternParam)
     records = Record.objects.filter(category=category1)
 
