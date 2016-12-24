@@ -1,22 +1,21 @@
 <div>
- {{ userProfile.user.first_name }} 
- {{ userProfile.user.last_name }} 
+ {{ category.prop }} 
+ {{ category.prop_count }} 
+ {{ category.pattern }} 
 </div>
 <div>
- {{ userProfile.user.name }} 
-</div>
-<div>
-    <a href="{{ userProfile.info_url }}">
-        more about {{ userProfile.user.username }} 
-    </a>
-</div>
-<div>
-    <button type="button">hide beaten entries</button>
+    <button type="button">add new entry</button>
     <button type="button">hide unofficial entries</button>
 </div>
 <table>
     {% for record in records %}
     <tr>
+        <td>
+            <a href="/records/profilePage/{{record.user.username}}">
+            {{ record.user.first_name }}
+            {{ record.user.last_name }}
+        </a>
+        </td>
         <td>
             <a href="/records/recordCategoryPage/{{record.category.prop}}-{{record.category.prop_count}}-{{record.category.pattern}}">
             {{ record.category }}
@@ -45,4 +44,5 @@
     <p>No polls are available.</p>
 {% endif %}>
 --!>
+
 

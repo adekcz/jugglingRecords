@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 
-from .models import UserProfile, Record
+from .models import UserProfile, Record, RecordCategory
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
@@ -15,6 +15,20 @@ def profilePage(request, param):
     template = loader.get_template("records/profilePage.html")
     context = { 
             "userProfile": user1, 
+            "records": records }
+
+    return HttpResponse(template.render(context, request))
+
+def recordCategoryPage(request, propParam, propCountParam, patternParam):
+    print("\n'n'nBBB\n\n\n")
+    #todo validate
+    
+    category1 = RecordCategory.objects.get(prop=propParam, prop_count=int(propCountParam), pattern=patternParam)
+    records = Record.objects.filter(category=category1)
+
+    template = loader.get_template("records/recordCategoryPage.html")
+    context = { 
+            "category": category1, 
             "records": records }
 
     return HttpResponse(template.render(context, request))

@@ -2,6 +2,11 @@ from django.db import models
 
 from django.contrib.auth.models import User
 
+
+def urlize(string):
+    pass
+        
+
 # Create your models here.
 #class User(models.Model):
     #question_text = models.CharField(max_length=200)
@@ -34,7 +39,11 @@ class RecordCategory(models.Model):
 
     def __str__(self):
         return str(self.prop_count) + " " +  str(self.prop) + " " + str(self.pattern)
+
+    def asUrlPart(self):
+        return urlize(self.__str__())
     
+
 class Record(models.Model):
     user = models.ForeignKey(User)
     category = models.ForeignKey(RecordCategory)
