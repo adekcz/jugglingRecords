@@ -1,34 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css" />
-    <title>{% block title %}My amazing site{% endblock %}</title>
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'records/styles.css' %}" />
+    <title>Juggling Records</title>
 </head>
 <body>
 <!-- header -->
-<div>
-    <div>
-        <a href="/records/">Juggling Records</a>
-    </div>
-{% if user.is_authenticated %}
-    <div>
-        <div>
-            <a href="/records/profilePage/{{user.username}}">{{user.username}}</a>
-        </div>
-        <div>
-            <a href="/records/logout">logout</a>
-        </div>
-    </div>
-{% else %}
-    <div>
-        <div>
-            <a href="/records/register">Register</a>
-        </div>
-        <div>
-            <a href="/records/login">Login</a>
-        </div>
-    </div>
-{% endif %}
+<div class="header-section">
+        <a  class="header-link left-align"  href="/records/">Juggling Records</a>
+        {% if user.is_authenticated %}
+            <a  class="header-link right-align" 
+                href="/records/profilePage/{{user.username}}">{{user.username}}</a>
+            <a  class="header-link right-align" href="/records/logout">logout</a>
+        {% else %}
+            <a class="header-link right-align" href="/records/register">Register</a>
+            <a class="header-link right-align" href="/records/login">Login</a>
+        {% endif %}
 </div>
 <!-- main content -->
 

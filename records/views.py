@@ -75,7 +75,6 @@ def index(request, prop="all"):
 
 def profilePage(request, param):
     print(param)
-    print("\n'n'nAAA\n\n\n")
     user = UserProfile.objects.all()[0]
     records = Record.objects.filter(user__username=param)
 
