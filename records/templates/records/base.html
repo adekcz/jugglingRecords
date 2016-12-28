@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <title>{% block title %}My amazing site{% endblock %}</title>
+</head>
+<body>
+<!-- header -->
+<div>
+    <div>
+        <a href="/records/">Juggling Records</a>
+    </div>
+{% if user.is_authenticated %}
+    <div>
+        <div>
+            <a href="/records/profilePage/{{user.username}}">{{user.username}}</a>
+        </div>
+        <div>
+            <a href="/records/logout">logout</a>
+        </div>
+    </div>
+{% else %}
+    <div>
+        <div>
+            <a href="/records/register">Register</a>
+        </div>
+        <div>
+            <a href="/records/login">Login</a>
+        </div>
+    </div>
+{% endif %}
+</div>
+<!-- main content -->
+
+ {% block content %}{% endblock %}
+
+<!-- footer -->
+<div>
+    <div>
+    {% lorem 1 p %}
+    </div>
+    <div>
+    {% lorem 8 w %}
+    </div>
+    <div>
+    {% lorem 10 w %}
+    </div>
+</div>
+</body>
+</html>

@@ -1,3 +1,5 @@
+{% extends "records/base.html" %}
+{% block content %}
 <div>
  {{ category.prop }} 
  {{ category.prop_count }} 
@@ -32,6 +34,7 @@
     </tr>
     {% endfor %}
 </table>
+{% endblock content %}
 
 <!---
 {% if latest_question_list %}

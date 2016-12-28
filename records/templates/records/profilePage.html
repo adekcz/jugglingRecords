@@ -1,3 +1,5 @@
+{% extends "records/base.html" %}
+{% block content %}
 <div>
  {{ userProfile.user.first_name }} 
  {{ userProfile.user.last_name }} 
@@ -33,6 +35,7 @@
     </tr>
     {% endfor %}
 </table>
+{% endblock content %}
 
 <!---
 {% if latest_question_list %}
