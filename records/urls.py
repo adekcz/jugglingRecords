@@ -6,8 +6,9 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^index-(\w+)$', views.index, name='index-prop'),
     url(r'^profilePage/(\w*)', views.profilePage, name='profilePage'),
-    url(r'^recordCategoryPage/(\w*)-(\w*)-(\w*)', views.recordCategoryPage, name='recordCategoryPage'),
+    url(r'^recordCategoryPage/(\w*)-(\w*)-([ \w]*)', views.recordCategoryPage, name='recordCategoryPage'),
     url(r'^loginPage', views.loginPage, name='loginPage'),
     #url('^', include('django.contrib.auth.urls')),
  url(r'^login/$', auth_views.login, name='login'),

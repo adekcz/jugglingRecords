@@ -3,10 +3,10 @@
 <div>
     Official Juggling Records
 </div>
-<div>
-    <button type="button">all</button>
-    <button type="button">category1, category2, category3..</button>
-</div>
+    <button type="submit" onclick="location.href='/records/index-all';" name="all">all</button>
+    {% for choice in props %}
+    <button type="submit" onclick="location.href='/records/index-{{choice.0}}';" name="{{choice.0}}">{{choice.1}}</button>
+    {% endfor %}
 <table>
     {% for record in records %}
     <tr>

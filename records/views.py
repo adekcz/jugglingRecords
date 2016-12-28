@@ -5,15 +5,22 @@ from django.contrib.auth import authenticate, login
 
 from .models import UserProfile, Record, RecordCategory
 
-def index(request):
-    print("ahoj  \n\n\n")
-    categories = RecordCategory.objects.all()
+def index(request, prop="all"):
+    print("\n\n\nnGET:  \n")
+    print(request.GET)
+    print("END GET ")
+    categories = None
+    if (prop == "all"):
+        categories = RecordCategory.objects.all()
+    else:
+        categories = RecordCategory.objects.filter(prop=prop)
     worldRecords = []
     for category in categories:
         worldRecords.append(Record.objects.filter(category=category).order_by('endurance_time')[0])
     template = loader.get_template("records/index.html")
     context = { 
-            "records": worldRecords }
+            "records": worldRecords,
+            "props": RecordCategory.PROPS_CHOICES }
 
     return HttpResponse(template.render(context, request))
 
@@ -32,7 +39,9 @@ def profilePage(request, param):
     return HttpResponse(template.render(context, request))
 
 def recordCategoryPage(request, prop, propCount, pattern):
-    print("\n'n'nBBB\n\n\n")
+
+    print("\n\npattern:\n\n")
+    print(pattern)
     #todo validate
 
     category = RecordCategory.objects.get(prop=prop, prop_count=int(propCount), pattern=pattern)
