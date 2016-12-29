@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 def urlize(string):
-    pass
+    return string.replace(" ", "-")
         
 
 # Create your models here.
@@ -40,6 +40,7 @@ class RecordCategory(models.Model):
     def __str__(self):
         return str(self.prop_count) + " " +  str(self.prop) + " " + str(self.pattern)
 
+#todo probably needs much more systematic approach (either heavy validation on allowable patter names, or better __str__)
     def asUrlPart(self):
         return urlize(self.__str__())
     
