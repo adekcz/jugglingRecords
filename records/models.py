@@ -51,6 +51,7 @@ class Record(models.Model):
     record_happened = models.DateTimeField('when record was juggled')
     url_to_proof = models.URLField()
     approved = models.BooleanField(default=False)
+    public = models.BooleanField(default=True)
     catches = models.IntegerField(default=None, blank=True, null=True)
     endurance_time = models.DurationField(default=None, blank=True, null=True)
     def __str__(self):

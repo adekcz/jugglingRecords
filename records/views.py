@@ -9,7 +9,23 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 
 from .models import UserProfile, Record, RecordCategory
-from .forms import RegisterForm
+from .forms import RegisterForm, NewRecordForm
+
+def newRecord(request):
+    if request.method == "POST":
+        form = NewRecordForm(request.POST)
+        if form.is_valid():
+            new_record = Record(**form.cleaned_data)
+            new_record.user = request.user
+            new_record.save()
+            print("new record:\n\n")
+            print(new_record)
+            # redirect, or however you want to get to the main view
+            return HttpResponseRedirect("/records/profilePage/"+request.user.username)
+    else:
+        form = NewRecordForm() 
+
+    return render(request, 'records/newRecord.html', {'form': form}) 
 
 def registration(request):
     if request.method == "POST":
