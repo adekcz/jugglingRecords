@@ -118,4 +118,7 @@ def loginPage(request):
    #     # Return an 'invalid login' error message.
    #     ...
 
+def accountSettings(request):
+    return render(request, 'records/accountSettings.html', None) 
+
 #The login_required decorator¶

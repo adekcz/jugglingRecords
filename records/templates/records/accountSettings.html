@@ -1,0 +1,31 @@
+{% extends "records/base.html" %}
+{% block content %}
+  <div class="color-section juggler">
+    <h1>Account settings</h1>
+    <div class="newentry-container">
+      <div class="w-form">
+        <form data-name="Email Form" id="email-form" name="email-form">
+          <div class="w-row">
+            <div class="column left w-col w-col-6 w-col-small-6">
+              <label class="form-label" for="fn">first name</label>
+              <input class="form-text-field w-input" data-name="fn" id="fn" maxlength="256" name="fn" placeholder="Paul" type="text">
+            </div>
+            <div class="column right w-col w-col-6 w-col-small-6">
+              <label class="form-label" for="ln">last name</label>
+              <input class="form-text-field w-input" data-name="ln" id="ln" maxlength="256" name="ln" placeholder="Smith" type="text">
+            </div>
+          </div>
+          <label class="form-label" for="url-2">url</label>
+          <input class="form-text-field w-input" data-name="Url 2" id="url-2" maxlength="256" name="url-2" placeholder="https://youtu.be/uNss0KZr9dc" type="text">
+          <input class="big-button w-button" data-wait="Please wait..." type="submit" value="Update">
+        </form>
+        <div class="w-form-done">
+          <div>Thank you! Your submission has been received!</div>
+        </div>
+        <div class="w-form-fail">
+          <div>Oops! Something went wrong while submitting the form</div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

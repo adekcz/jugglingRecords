@@ -2,12 +2,49 @@
 
 
 {% block content %}
-  <h2>Register new user</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-  </form>
+  <div class="color-section">
+    <h1>Register...</h1>
+    <div class="container">
+      <div class="w-row">
+        <div class="column-line w-col w-col-6">
+          <h2>...with social media</h2>
+          <p>It's quick and safe. We'll never share anything without letting you know.</p><a class="big-button w-button" href="#">Facebook</a>
+        </div>
+        <div class="column w-col w-col-6">
+          <h2>...using your e-mail</h2>
+          <p>We'll send you an e-mail with a link, where you'll set your password and finish the registration.</p>
+          <div class="w-form">
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Register</button>
+          </form>
+            <form class="narrow-form" data-name="Email Form" id="email-form" name="email-form">
+              <div class="w-row">
+                <div class="column left w-col w-col-6 w-col-small-6">
+                  <label class="form-label" for="name">first name</label>
+                  <input class="form-text-field w-input" data-name="Name" id="name" maxlength="256" name="name" type="text">
+                </div>
+                <div class="column right w-col w-col-6 w-col-small-6">
+                  <label class="form-label" for="name-2">last name</label>
+                  <input class="form-text-field w-input" data-name="Name 2" id="name-2" maxlength="256" name="name-2" type="text">
+                </div>
+              </div>
+              <label class="form-label" for="email">e-mail</label>
+              <input class="form-text-field w-input" data-name="Email" id="email" maxlength="256" name="email" required="required" type="email">
+              <input class="big-button w-button" data-wait="Please wait..." type="submit" value="Register">
+            </form>
+            <div class="success-message w-form-done">
+              <div>Check your e-mail to finish the registration.</div>
+            </div>
+            <div class="error-message w-form-fail">
+              <div>Oops! Something went wrong while submitting the form.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 

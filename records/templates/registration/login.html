@@ -2,10 +2,38 @@
 
 
 {% block content %}
+  <div class="color-section">
+    <h1>Login...</h1>
+    <div class="container">
+      <div class="w-row">
+        <div class="column-line w-col w-col-6">
+          <h2>...with social media</h2><a class="big-button w-button" href="#">Facebook</a>
+        </div>
+        <div class="w-col w-col-6">
+          <h2>...using your e-mail</h2>
+          <div class="w-form">
+              <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+              </form>
+            <form data-name="Email Form" id="email-form" name="email-form">
+              <label class="form-label" for="email-2">e-mail</label>
+              <input class="form-text-field w-input" data-name="Email 2" id="email-2" maxlength="256" name="email-2" required="required" type="email">
+              <label class="form-label" for="email">password</label>
+              <input class="form-text-field w-input" data-name="Email" id="email" maxlength="256" name="email" required="required" type="password">
+              <input class="big-button w-button" data-wait="Please wait..." type="submit" value="Login">
+            </form>
+            <div class="success-message w-form-done">
+              <div>Check your e-mail to finish the registration.</div>
+            </div>
+            <div class="error-message w-form-fail">
+              <div>Oops! Something went wrong while submitting the form.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
 {% endblock %}

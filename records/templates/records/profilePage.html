@@ -1,40 +1,99 @@
 {% extends "records/base.html" %}
 {% block content %}
-<div>
- {{ userProfile.user.first_name }} 
- {{ userProfile.user.last_name }} 
+<div class="color-section juggler">
+    <h1>
+        {{ userProfile.user.first_name }} 
+        {{ userProfile.user.last_name }} 
+    </h1>
+    <div class="filter-line">
+        <a class="button w-button" href="{{ userProfile.info_url }}">
+            more about {{ userProfile.user.first_name }} 
+        </a> 
+    </div>
+    <div class="filter-line">
+        <div class="filter-text">Filter:</div>
+        <a class="button w-button" href="my-account.html">beaten entries</a>
+        <a class="button w-button" href="my-account.html">claims</a>
+    </div>
+    <div class="database-line title">
+        <div class="entry">
+            <div class="relative-pt w-clearfix">
+                <div class="entry-cell juggler-record">
+                    <div>record</div>
+                </div>
+                <div class="entry-cell juggler-time">
+                    <div>time</div>
+                </div>
+                <div class="entry-cell juggler-catches">
+                    <div>catches</div>
+                </div>
+                <div class="entry-cell juggler-on">
+                    <div>on</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
- {{ userProfile.user.name }} 
+
+
+<div class="database-section">
+    <div class="blue database-line">
+        {% for record in records %}
+        <div class="entry w-clearfix">
+            <div class="absolute-left-pt"></div>
+            <div class="absolute-right-pt">
+                <a class="ed entrymanagement-link" href="new-entry.html">edit</a>
+                <a class="de entrymanagement-link" href="#">remove</a>
+            </div>
+            <div class="relative-pt w-clearfix">
+                <div class="entry-cell juggler-record">
+                    <a href="/records/recordCategoryPage/{{record.category.prop}}-{{record.category.prop_count}}-{{record.category.pattern}}">
+                        {{ record.category }}
+                    </a>
+                </div>
+                <div class="entry-cell juggler-catches">
+                    <a href="{{record.url_to_proof}}">
+                        {{ record.endurance_time }}
+                    </a>
+                </div>
+                <div class="entry-cell juggler-time"></div>
+                <div class="entry-cell juggler-on">
+                    <div> {{ record.record_happened }} </div>
+                </div>
+            </div>
+        </div>
+        <div class="entry-mob">
+            <div>
+                <a href="/records/recordCategoryPage/{{record.category.prop}}-{{record.category.prop_count}}-{{record.category.pattern}}">
+                    {{ record.category }}
+                </a>
+            </div>
+            <div class="value-mob">
+                <a href="{{record.url_to_proof}}">
+                    {{ record.endurance_time }}
+                </a>
+            </div>
+            <div>on {{ record.record_happened }} </div>
+                <a class="ed entrymanagement-link" href="#">edit</a>
+                <a class="de entrymanagement-link" href="#">remove</a>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="database-line">
+            <div class="entry">
+                <div class="relative-pt">
+                    <a class="button w-button" href="/records/newRecord">add a new entry</a>
+                </div>
+            </div>
+            <div class="entry-mob">
+                <a class="button w-button" href="/records/newRecord">add a new entry</a>
+            </div>
+        </div>
+  </div>
 </div>
-<div>
-    <a href="{{ userProfile.info_url }}">
-        more about {{ userProfile.user.username }} 
-    </a>
-</div>
-<div>
-    <button type="button">hide beaten entries</button>
-    <button type="button">hide unofficial entries</button>
-</div>
-<table>
-    {% for record in records %}
-    <tr>
-        <td>
-            <a href="/records/recordCategoryPage/{{record.category.prop}}-{{record.category.prop_count}}-{{record.category.pattern}}">
-            {{ record.category }}
-            </a>
-        </td>
-        <td>
-            <a href="{{record.url_to_proof}}">
-            {{ record.endurance_time }}
-            </a>
-        </td>
-        <td>
-            {{ record.record_happened }}
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+
+
 {% endblock content %}
 
 <!---

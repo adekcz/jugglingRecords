@@ -1,47 +1,82 @@
 {% extends "records/base.html" %}
 {% block content %}
-<div>
-    Official Juggling Records
+<div class="color-section">
+    <h1>World Records</h1>
+    <div class="filter-line">
+        <div class="filter-text">Props:</div>
+        <a class="button stick w-button" href="/records/index-all">all</a>
+        {% for choice in props %}
+        <a class="button stick w-button" href="/records/index-{{choice.0}}">{{choice.1}}</a>
+        {% endfor %}
+    </div>
+    <div class="filter-line">
+        <div class="filter-text">Type:</div>
+        <a class="button stick w-button" href="index.html">all</a>
+        <a class="button stick w-button" href="#">plain endurance</a>
+        <a class="button stick w-button" href="#">trick endurance</a>
+    </div>
+    <div class="database-line title">
+        <div class="entry">
+            <div class="relative-pt w-clearfix">
+                <div class="entry-cell home-record">
+                    <div>record</div>
+                </div>
+                <div class="entry-cell home-value">
+                    <div>value</div>
+                </div>
+                <div class="entry-cell home-by">
+                    <div>by</div>
+                </div>
+                <div class="entry-cell home-on">
+                    <div>on</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-    <button type="submit" onclick="location.href='/records/index-all';" name="all">all</button>
-    {% for choice in props %}
-    <button type="submit" onclick="location.href='/records/index-{{choice.0}}';" name="{{choice.0}}">{{choice.1}}</button>
-    {% endfor %}
-<table>
+<div class="database-section">
     {% for record in records %}
-    <tr>
-        <td>
-            <a href="/records/recordCategoryPage/{{record.category.prop}}-{{record.category.prop_count}}-{{record.category.pattern}}">
-            {{ record.category }}
-            </a>
-        </td>
-        <td>
-            <a href="{{record.url_to_proof}}">
-            {{ record.endurance_time }}
-            </a>
-        </td>
-        <td>
-            <a href="/records/profilePage/{{record.user.username}}">
-            {{ record.user.first_name }}
-            {{ record.user.last_name }}
-        </a>
-        </td>
-    </tr>
+    <div class="database-line yellow">
+        <div class="entry">
+            <div class="relative-pt w-clearfix">
+                <div class="entry-cell home-record">
+                    <a href="/records/recordCategoryPage/{{record.category.prop}}-{{record.category.prop_count}}-{{record.category.pattern}}">
+                    {{ record.category }}
+                    </a>
+                </div>
+                <div class="entry-cell home-value">
+                    <a href="{{record.url_to_proof}}">
+                    {{ record.endurance_time }} </a>
+                </div>
+                <div class="entry-cell home-by">
+                    <a href="/records/profilePage/{{record.user.username}}">
+                    {{ record.user.first_name }}
+                    {{ record.user.last_name }} </a>
+                </div>
+                <div class="entry-cell home-on">
+                    {{ record.record_happened }} 
+                </div>
+            </div>
+        </div>
+        <div class="entry-mob">
+            <div>
+                <a href="/records/recordCategoryPage/{{record.category.prop}}-{{record.category.prop_count}}-{{record.category.pattern}}">
+                {{ record.category }} </a>
+            </div>
+            <div class="value-mob">
+                <a href="/records/recordCategoryPage/{{record.category.prop}}-{{record.category.prop_count}}-{{record.category.pattern}}">
+                {{ record.category }} </a>
+            </div>
+            <div>
+                by 
+                <a href="/records/profilePage/{{record.user.username}}">
+                {{ record.user.first_name }}
+                {{ record.user.last_name }} </a>
+                on
+                {{ record.record_happened }} 
+            </div>
+        </div>
+    </div>
     {% endfor %}
-</table>
+</div>
 {% endblock content %}
-
-<!---
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}>
---!>
-
-
-

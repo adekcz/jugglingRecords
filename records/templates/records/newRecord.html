@@ -2,12 +2,46 @@
 
 
 {% block content %}
-  <h2>New Records</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add</button>
-  </form>
+  <div class="color-section juggler">
+    <h1>New entry</h1>
+    <div class="newentry-container">
+      <div class="w-form">
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add</button>
+      </form>
+        <!-- <form data-name="Email Form" id="email-form" name="email-form">
+          <div class="filter-line"><a class="button stick w-button" href="new-entry.html">public</a><a class="button stick w-button" href="#">private</a>
+          </div>
+          <label class="form-label" for="rec">record</label>
+          <input class="form-text-field w-input" data-name="rec" id="rec" maxlength="256" name="rec" placeholder="5 balls plain endurance" type="text">
+          <div class="w-row">
+            <div class="column left w-col w-col-6 w-col-small-6">
+              <label class="form-label" for="ti">time</label>
+              <input class="form-text-field w-input" data-name="ti" id="ti" maxlength="256" name="ti" placeholder="1:32:45" type="text">
+            </div>
+            <div class="column right w-col w-col-6 w-col-small-6">
+              <label class="form-label" for="ca">catches</label>
+              <input class="form-text-field w-input" data-name="ca" id="ca" maxlength="256" name="ca" placeholder="320" type="text">
+            </div>
+          </div>
+          <label class="form-label" for="da">date</label>
+          <input class="form-text-field w-input" data-name="da" id="da" maxlength="256" name="da" placeholder="31/12/2016" type="text">
+          <label class="form-label" for="url">video/evidence url</label>
+          <input class="form-text-field w-input" data-name="url" id="url" maxlength="256" name="url" placeholder="https://youtu.be/uNss0KZr9dc" type="text">
+          <input class="big-button w-button" data-wait="Please wait..." type="submit" value="Add">
+        </form>
+        <div class="w-form-done">
+          <div>Thank you! Your submission has been received!</div>
+        </div>
+        <div class="w-form-fail">
+          <div>Oops! Something went wrong while submitting the form</div>
+        </div>
+        -->
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 
