@@ -15,9 +15,18 @@
 <div class="header-section w-clearfix">
         <a  class="header-link left-align"  href="/records/">Juggling Records</a>
         {% if user.is_authenticated %}
-            <a  class="header-link right-align" href="/records/logout">Logout</a>
-            <a  class="header-link right-align" 
-                href="/records/profilePage/{{user.username}}">{{user.username}}</a>
+
+                <div class="dropdown-button w-dropdown" data-delay="0">
+                    <div class="dropdown w-dropdown-toggle"><img src="{% static 'records/images/arro.png' %}">
+                  </div>
+                  <nav class="dropdown-list w-dropdown-list">
+                      <a class="dropdown-link w-dropdown-link" href="/records/newRecord">new entry</a>
+                      <a class="dropdown-link w-dropdown-link" href="/records/accountSettings">account settings</a>
+                      <a class="dropdown-link w-dropdown-link" href="/records/logout">log out</a>
+                  </nav>
+                </div>
+                    <a  class="header-link right-align" href="/records/profilePage/{{user.username}}">{{user.username}}</a>
+              </div>
         {% else %}
             <a class="header-link right-align" href="/records/register">Register</a>
             <a class="header-link right-align" href="/records/login">Login</a>

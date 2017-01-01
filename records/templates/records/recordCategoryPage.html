@@ -9,9 +9,11 @@
     </h1>
     <div class="filter-line">
         <div class="filter-text">Filter:</div>
-        <a class="button w-button" href="#">beaten entries</a>
-        <a class="button w-button" href="/records/newRecord5b-plain.html">claims</a>
-        <a class="button w-button" href="#">only personal</a>
+        {% spaceless %}
+        <a class="button stick w-button" href="#">beaten entries</a>
+        <a class="button stick w-button" href="/records/newRecord5b-plain.html">claims</a>
+        <a class="button stick w-button" href="#">only personal</a>
+        {% endspaceless %}
     </div>
     <div class="database-line title">
         <div class="entry">
@@ -61,7 +63,7 @@
                     </a>
                 </div>
                 <div class="discipline-on entry-cell">
-                    <div> {{ record.record_happened }} </div>
+                    <div> {{ record.record_happened|date:"d/m/Y"  }} </div>
                 </div>
             </div>
         </div>
@@ -80,7 +82,7 @@
                     {{ record.catches }}
                 </a>
             </div>
-            <div>on  {{ record.record_happened }}</div>
+            <div>on  {{ record.record_happened|date:"d/m/Y"  }}</div>
         </div>
     </div>
     {% endfor %}

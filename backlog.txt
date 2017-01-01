@@ -1,2 +1,11 @@
 write automated tests
 meta tags in header from stylized 
+
+
+
+sharovani rekordu
+na mypage sdruzit rekordy stejne kategorie
+https://google.github.io/styleguide/pyguide.html
+
+
+http://jsfiddle.net/5FLr4/

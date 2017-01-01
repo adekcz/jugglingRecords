@@ -4,16 +4,16 @@
     <h1>World Records</h1>
     <div class="filter-line">
         <div class="filter-text">Props:</div>
+        {% spaceless %}
         <a class="button stick w-button" href="/records/index-all">all</a>
         {% for choice in props %}
         <a class="button stick w-button" href="/records/index-{{choice.0}}">{{choice.1}}</a>
         {% endfor %}
+        {% endspaceless %}
     </div>
     <div class="filter-line">
         <div class="filter-text">Type:</div>
-        <a class="button stick w-button" href="index.html">all</a>
-        <a class="button stick w-button" href="#">plain endurance</a>
-        <a class="button stick w-button" href="#">trick endurance</a>
+        <a class="button stick w-button" href="index.html">all</a><a class="button stick w-button" href="#">plain endurance</a><a class="button stick w-button" href="#">trick endurance</a>
     </div>
     <div class="database-line title">
         <div class="entry">
@@ -54,7 +54,7 @@
                     {{ record.user.last_name }} </a>
                 </div>
                 <div class="entry-cell home-on">
-                    {{ record.record_happened }} 
+                    {{ record.record_happened|date:"d/m/Y" }} 
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
                 {{ record.user.first_name }}
                 {{ record.user.last_name }} </a>
                 on
-                {{ record.record_happened }} 
+                {{ record.record_happened|date:"d/m/Y"  }} 
             </div>
         </div>
     </div>

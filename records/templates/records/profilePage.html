@@ -12,8 +12,10 @@
     </div>
     <div class="filter-line">
         <div class="filter-text">Filter:</div>
-        <a class="button w-button" href="my-account.html">beaten entries</a>
-        <a class="button w-button" href="my-account.html">claims</a>
+        {% spaceless %}
+        <a class="button stick w-button" href="my-account.html">beaten entries</a>
+        <a class="button stick w-button" href="my-account.html">claims</a>
+        {% endspaceless %}
     </div>
     <div class="database-line title">
         <div class="entry">
@@ -41,7 +43,7 @@
         {% for record in records %}
         <div class="entry w-clearfix">
             <div class="absolute-left-pt"></div>
-            <div class="absolute-right-pt">
+            <div class="manageButtons absolute-right-pt">
                 <a class="ed entrymanagement-link" href="new-entry.html">edit</a>
                 <a class="de entrymanagement-link" href="#">remove</a>
             </div>
@@ -58,7 +60,7 @@
                 </div>
                 <div class="entry-cell juggler-time"></div>
                 <div class="entry-cell juggler-on">
-                    <div> {{ record.record_happened }} </div>
+                    <div> {{ record.record_happened|date:"d/m/Y"  }} </div>
                 </div>
             </div>
         </div>
@@ -73,7 +75,7 @@
                     {{ record.endurance_time }}
                 </a>
             </div>
-            <div>on {{ record.record_happened }} </div>
+            <div>on {{ record.record_happened|date:"d/m/Y"  }} </div>
                 <a class="ed entrymanagement-link" href="#">edit</a>
                 <a class="de entrymanagement-link" href="#">remove</a>
             </div>
