@@ -27,7 +27,22 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers':['console'],
+            'propagate': True,
+            'level':'DEBUG',
+        }
+    },
+}
 # Application definition
 
 INSTALLED_APPS = [

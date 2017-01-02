@@ -1,7 +1,7 @@
+"""Controller methods"""
 from django.http import HttpResponse
 from django.template import loader
-from django.core.urlresolvers import reverse 
-from django.contrib.auth import authenticate, login
+from django.core.urlresolvers import reverse
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -11,98 +11,84 @@ from django.contrib.auth.models import User
 from .models import UserProfile, Record, RecordCategory
 from .forms import RegisterForm, NewRecordForm
 
-def newRecord(request):
+def new_entry(request):
     if request.method == "POST":
         form = NewRecordForm(request.POST)
-        if form.is_valid():
-            new_record = Record(**form.cleaned_data)
-            new_record.user = request.user
-            new_record.save()
-            print("new record:\n\n")
-            print(new_record)
-            # redirect, or however you want to get to the main view
-            return HttpResponseRedirect("/records/profilePage/"+request.user.username)
+        handle_new_entry_form(request, form)
     else:
-        form = NewRecordForm() 
+        form = NewRecordForm()
 
-    return render(request, 'records/newRecord.html', {'form': form}) 
+    return render(request, 'records/newRecord.html', {'form': form})
+
+def handle_new_entry_form(request, form):
+    if form.is_valid():
+        new_record = Record(**form.cleaned_data)
+        new_record.user = request.user
+        new_record.save()
+        return HttpResponseRedirect("/records/profilePage/"+request.user.username)
 
 def registration(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
-        if form.is_valid():
-            print("\n\n\nform:")
-            print(form)
-            username = form.cleaned_data["email"]
-            firstname = form.cleaned_data["first_name"]
-            lastname = form.cleaned_data["last_name"]
-            new_user = User.objects.create_user(username,username,"changeit")
-            new_user.save()
-            # redirect, or however you want to get to the main view
-            return HttpResponseRedirect(reverse("index"))
+        handle_registration_form(form)
     else:
-        form = RegisterForm() 
+        form = RegisterForm()
 
-    return render(request, 'registration/register.html', {'form': form}) 
+    return render(request, 'registration/register.html', {'form': form})
+
+def handle_registration_form(form):
+    if form.is_valid():
+        username = form.cleaned_data["email"]
+        new_user = User.objects.create_user(username, username, "changeit")
+        new_user.save()
+        return HttpResponseRedirect(reverse("index"))
 
 def registration1(request):
     template = loader.get_template("registration/register.html")
-    context = { 
-            "records": None }
+    context = {"records": None}
 
     return HttpResponse(template.render(context, request))
 
 
 def index(request, prop="all"):
-    print("\n\n\nnGET:  \n")
-    print(request.GET)
-    print("END GET ")
-    categories = None
-    if (prop == "all"):
-        categories = RecordCategory.objects.all()
-    else:
-        categories = RecordCategory.objects.filter(prop=prop)
-    worldRecords = []
-    for category in categories:
-        worldRecords.append(Record.objects.filter(category=category).order_by('endurance_time')[0])
+    world_records = handle_filters(prop)
     template = loader.get_template("records/index.html")
-    context = { 
-            "records": worldRecords,
-            "props": RecordCategory.PROPS_CHOICES }
+    context = {"records": world_records, "props": RecordCategory.PROPS_CHOICES}
 
     return HttpResponse(template.render(context, request))
 
+def handle_filters(prop):
+    """"returns list of world_records for index page based on various filters on page"""
+    world_records = []
+    categories = []
+    if prop == "all":
+        categories = RecordCategory.objects.all()
+    else:
+        categories = RecordCategory.objects.filter(prop=prop)
+    for category in categories:
+        world_records.append(Record.objects.filter(category=category).order_by('endurance_time')[0])
+    return world_records
 
-def profilePage(request, param):
-    print(param)
+def profile_page(request, param):
     user = UserProfile.objects.all()[0]
     records = Record.objects.filter(user__username=param)
 
     template = loader.get_template("records/profilePage.html")
-    context = { 
-            "userProfile": user, 
-            "records": records }
+    context = {"userProfile": user, "records": records}
 
     return HttpResponse(template.render(context, request))
 
-def recordCategoryPage(request, prop, propCount, pattern):
-
-    print("\n\npattern:\n\n")
-    print(pattern)
-    #todo validate
-
-    category = RecordCategory.objects.get(prop=prop, prop_count=int(propCount), pattern=pattern)
+def record_category_page(request, prop, prop_count, pattern):
+    category = RecordCategory.objects.get(prop=prop, prop_count=int(prop_count), pattern=pattern)
     records = Record.objects.filter(category=category)
 
     template = loader.get_template("records/recordCategoryPage.html")
-    context = { 
-            "category": category, 
-            "records": records }
+    context = {"category": category, "records": records}
 
     return HttpResponse(template.render(context, request))
 
 
-def loginPage(request):
+def login_page(request):
     template = loader.get_template("records/base.html")
     context = {}
 
@@ -118,7 +104,7 @@ def loginPage(request):
    #     # Return an 'invalid login' error message.
    #     ...
 
-def accountSettings(request):
-    return render(request, 'records/accountSettings.html', None) 
+def account_settings(request):
+    return render(request, 'records/accountSettings.html', None)
 
 #The login_required decorator¶

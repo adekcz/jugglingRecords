@@ -1,7 +1,8 @@
+""" Used to specify parameters for hidden administration """
 from django.contrib import admin
 
-from .models import *
+from .models import Record, RecordCategory, UserProfile
 
-myModels = [Record, UserProfile, RecordCategory]  # iterable list
+USED_MODELS = [Record, UserProfile, RecordCategory]  # iterable list
 
-admin.site.register(myModels)
+admin.site.register(USED_MODELS)
