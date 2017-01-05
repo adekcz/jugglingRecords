@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+NORECAPTCHA_SITE_KEY = "6LeHpBAUAAAAAHH1D7Nbmcq0tuUOEcVG407-47Bs"
+NORECAPTCHA_SECRET_KEY = "6LeHpBAUAAAAAEhEOxQ-yhPbOHkYsOK43jbCNrU1"
+
 LOGGING = {
     'version': 1,
     'handlers': {
@@ -53,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'nocaptcha_recaptcha',
 ]
 
 MIDDLEWARE = [

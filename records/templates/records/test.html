@@ -1,0 +1,30 @@
+{% extends "records/base.html" %}
+{% block content %}
+    <form action="/records/simpleTest/" method="GET" id="my_form">
+        {% for prop, value in choices_prop.items %}
+            {{ value.0 }}
+            {% if value.1 %}
+                <input name="chosen_prop" value="{{prop}}" checked type="radio" onclick="document.getElementById('my_form').submit();"></input>
+            {% else %}
+                <input name="chosen_prop" value="{{prop}}" type="radio" onclick="document.getElementById('my_form').submit();"></input>
+            {% endif %}
+        {% endfor %}
+
+        {% for type, value in choices_type.items %}
+        {{ value.0 }}
+            {% if value.1 %}
+                <input name="chosen_type" value="{{type}}" checked type="radio" onclick="document.getElementById('my_form').submit();"></input>
+            {% else %}
+                <input name="chosen_type" value="{{type}}" type="radio" onclick="document.getElementById('my_form').submit();"></input>
+            {% endif %}
+        {% endfor %}
+
+
+
+        <button type="submit">sub</button>
+    </form>
+
+        <div id="console" style="background-color:red">
+            {{ text }}
+        </div>
+{% endblock content %}

@@ -28,20 +28,19 @@ def handle_new_entry_form(request, form):
         return HttpResponseRedirect("/records/profilePage/"+request.user.username)
 
 def registration(request):
+    """ not sure how to divide this method into shorter ones """
     if request.method == "POST":
         form = RegisterForm(request.POST)
-        handle_registration_form(form)
+        if form.is_valid():
+            username = form.cleaned_data["email"]
+            new_user = User.objects.create_user(username, username, "changeit")
+            new_user.save()
+            return HttpResponseRedirect(reverse("index"))
     else:
         form = RegisterForm()
 
     return render(request, 'registration/register.html', {'form': form})
 
-def handle_registration_form(form):
-    if form.is_valid():
-        username = form.cleaned_data["email"]
-        new_user = User.objects.create_user(username, username, "changeit")
-        new_user.save()
-        return HttpResponseRedirect(reverse("index"))
 
 def registration1(request):
     template = loader.get_template("registration/register.html")
