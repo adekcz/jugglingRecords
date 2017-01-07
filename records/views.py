@@ -65,11 +65,13 @@ def handle_filters(prop):
     else:
         categories = RecordCategory.objects.filter(prop=prop)
     for category in categories:
-        world_records.append(Record.objects.filter(category=category).order_by('endurance_time')[0])
+        records = Record.objects.filter(category=category).order_by('endurance_time')
+        if records != None:
+            world_records.append(records[0])
     return world_records
 
 def profile_page(request, param):
-    user = UserProfile.objects.all()[0]
+    user = UserProfile.objects.get(user__username=param)
     records = Record.objects.filter(user__username=param)
 
     template = loader.get_template("records/profilePage.html")

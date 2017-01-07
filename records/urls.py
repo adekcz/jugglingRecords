@@ -7,7 +7,7 @@ from . import views
 urlpatterns = [ #pylint: disable=invalid-name
     url(r'^$', views.index, name='index'),
     url(r'^index-(\w+)$', views.index, name='index-prop'),
-    url(r'^profilePage/(\w*)', views.profile_page, name='profilePage'),
+    url(r'^profilePage/([\w\.\@]*)', views.profile_page, name='profilePage'),
     url(r'^recordCategoryPage/(\w*)-(\w*)-([ \w]*)',
         views.record_category_page, name='recordCategoryPage'),
     url(r'^loginPage', views.login_page, name='loginPage'),
