@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 
 from .models import UserProfile, Record, RecordCategory
 from .forms import RegisterForm, NewRecordForm
@@ -33,8 +34,15 @@ def registration(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data["email"]
-            new_user = User.objects.create_user(username, username, "changeit")
+            default_password = "changeit"
+            new_user = User.objects.create_user(username, username, default_password)
             new_user.save()
+
+            new_user = authenticate(username=username, password=default_password)
+            login(request, new_user)
+
+            UserProfile.objects.create(user=new_user)
+
             return HttpResponseRedirect(reverse("index"))
     else:
         form = RegisterForm()
@@ -65,11 +73,13 @@ def handle_filters(prop):
     else:
         categories = RecordCategory.objects.filter(prop=prop)
     for category in categories:
-        world_records.append(Record.objects.filter(category=category).order_by('endurance_time')[0])
+        records = Record.objects.filter(category=category).order_by('endurance_time')
+        if records != None:
+            world_records.append(records[0])
     return world_records
 
 def profile_page(request, param):
-    user = UserProfile.objects.all()[0]
+    user = UserProfile.objects.get(user__username=param)
     records = Record.objects.filter(user__username=param)
 
     template = loader.get_template("records/profilePage.html")
