@@ -8,3 +8,7 @@ pip install django-nocaptcha-recaptcha
 pip install pylint-django
 
 pylint --load-plugins pylint_django 
+
+
+python manage.py makemigrations 
+python manage.py migrate
