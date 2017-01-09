@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from .keys import KEYS
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,17 +21,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'le++_bfiyb6&uq)hyv5-7kcm$@c2&56rla0(%j40%24%eyit&k'
+SECRET_KEY = KEYS["django"]["secret"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-NORECAPTCHA_SITE_KEY = "6LeHpBAUAAAAAHH1D7Nbmcq0tuUOEcVG407-47Bs"
-NORECAPTCHA_SECRET_KEY = "6LeHpBAUAAAAAEhEOxQ-yhPbOHkYsOK43jbCNrU1"
-#NORECAPTCHA_SITE_KEY = "6Le_yBAUAAAAADKX8JkLZ0NQRzW0Cs6fBkVfWwzn"
-#NORECAPTCHA_SECRET_KEY = "6Le_yBAUAAAAAIcuBO4K2fC2U89sbUQO0RdORriV"
+NORECAPTCHA_SITE_KEY = KEYS["local"]["site"]
+NORECAPTCHA_SECRET_KEY = KEYS["local"]["secret"]
+#NORECAPTCHA_SITE_KEY = KEYS["adekcz_pythonanywhere"]["secret"]
+#NORECAPTCHA_SECRET_KEY = KEYS["adekcz_pythonanywhere"]["secret"]
+
 LOGGING = {
     'version': 1,
     'handlers': {
