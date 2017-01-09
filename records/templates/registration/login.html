@@ -11,29 +11,28 @@
         </div>
         <div class="w-col w-col-6">
           <h2>...using your e-mail</h2>
+
+
           <div class="w-form">
-              <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Login</button>
-              </form>
-            <form data-name="Email Form" id="email-form" name="email-form">
-              <label class="form-label" for="email-2">e-mail</label>
-              <input class="form-text-field w-input" data-name="Email 2" id="email-2" maxlength="256" name="email-2" required="required" type="email">
-              <label class="form-label" for="email">password</label>
-              <input class="form-text-field w-input" data-name="Email" id="email" maxlength="256" name="email" required="required" type="password">
-              <input class="big-button w-button" data-wait="Please wait..." type="submit" value="Login">
+              <form class="narrow-form" method="post">
+e               {% csrf_token %}
+                {% load widget_tweaks %}
+                <label class="form-label" 
+                    for="{{form.username.id_for_label}}">
+                e-mail
+                </label>
+                {{ form.username|add_class:"form-text-field w-input" }}
+                <label class="form-label"
+                    for="{{form.password.id_for_label}}">
+                    {{form.password.label}}
+                </label>
+                {{ form.password|add_class:"form-text-field w-input" }}
+                <button class="big-button w-button" 
+                    data-wait="Please wait..." value="Login" type="submit">Login</button>
             </form>
-            <div class="success-message w-form-done">
-              <div>Check your e-mail to finish the registration.</div>
-            </div>
-            <div class="error-message w-form-fail">
-              <div>Oops! Something went wrong while submitting the form.</div>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
+</div>
   </div>
-  <h2>Login</h2>
+</div>
 {% endblock %}

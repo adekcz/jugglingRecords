@@ -47,21 +47,23 @@ class RecordCategory(models.Model):
 
 #todo probably needs much more systematic approach
 #(either heavy validation on allowable patter names, or better __str__)
-    def as_url_part(self):
-        return urlize(self.__str__())
 
 class Record(models.Model):
     """Model for entries"""
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    category = models.ForeignKey(RecordCategory, on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        verbose_name=" record",
+        to=RecordCategory,
+        on_delete=models.CASCADE,
+        )
     record_happened = models.DateField(
-        verbose_name='when record was juggled',
+        verbose_name=" date",
         default=date.today,
         )
-    url_to_proof = models.URLField(null=True, blank=True)
+    url_to_proof = models.URLField(" video/evidence url", null=True, blank=True)
     approved = models.BooleanField(default=False)
     public = models.BooleanField(default=True)
-    catches = models.IntegerField(default=None, null=True, blank=True)
+    catches = models.IntegerField(" catches", default=None, null=True, blank=True)
     endurance_time = models.DurationField(default=None, null=True, blank=True)
     def __str__(self):
         return str(self.user.username) + " " +  str(self.category) + " " + str(self.endurance_time)

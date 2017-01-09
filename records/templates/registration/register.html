@@ -14,34 +14,43 @@
           <h2>...using your e-mail</h2>
           <p>We'll send you an e-mail with a link, where you'll set your password and finish the registration.</p>
           <div class="w-form">
-          <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Register</button>
-          </form>
-            <form class="narrow-form" data-name="Email Form" id="email-form" name="email-form">
-              <div class="w-row">
-                <div class="column left w-col w-col-6 w-col-small-6">
-                  <label class="form-label" for="name">first name</label>
-                  <input class="form-text-field w-input" data-name="Name" id="name" maxlength="256" name="name" type="text">
+              <form class="narrow-form" method="post">
+                {% csrf_token %}
+                {% load widget_tweaks %}
+                <div class="w-row">
+                    <div class="column left w-col w-col-6 w-col-small-6">
+                        <label class="form-label" 
+                            for="{{form.first_name.id_for_label}}">
+                            {{ form.first_name.label }}
+                        </label>
+                        {{ form.first_name|add_class:"form-text-field w-input" }}
+                    </div>
+                    <div class="column right w-col w-col-6 w-col-small-6">
+                        <label class="form-label"
+                            for="{{form.last_name.id_for_label}}">
+                            {{ form.last_name.label }}
+                        </label>
+                        {{ form.last_name|add_class:"form-text-field w-input" }}
+                    </div>
                 </div>
-                <div class="column right w-col w-col-6 w-col-small-6">
-                  <label class="form-label" for="name-2">last name</label>
-                  <input class="form-text-field w-input" data-name="Name 2" id="name-2" maxlength="256" name="name-2" type="text">
-                </div>
-              </div>
-              <label class="form-label" for="email">e-mail</label>
-              <input class="form-text-field w-input" data-name="Email" id="email" maxlength="256" name="email" required="required" type="email">
-              <input class="big-button w-button" data-wait="Please wait..." type="submit" value="Register">
+                <label class="form-label"
+                    for="{{form.email.id_for_label}}">
+                    {{ form.email.label }}
+                </label>
+                {{ form.email|add_class:"form-text-field w-input" }}
+                {{ form.captcha|add_class:"form-text-field w-input" }}
+                <button class="big-button w-button" 
+                    data-wait="Please wait..." value="Register" type="submit">Register</button>
             </form>
-            <div class="success-message w-form-done">
-              <div>Check your e-mail to finish the registration.</div>
-            </div>
-            <div class="error-message w-form-fail">
-              <div>Oops! Something went wrong while submitting the form.</div>
-            </div>
-          </div>
         </div>
+        <div class="success-message w-form-done">
+            <div>Check your e-mail to finish the registration.</div>
+        </div>
+        <div class="error-message w-form-fail">
+            <div>Oops! Something went wrong while submitting the form.</div>
+        </div>
+    </div>
+</div>
       </div>
     </div>
   </div>

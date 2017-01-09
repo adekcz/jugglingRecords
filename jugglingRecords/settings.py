@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'nocaptcha_recaptcha',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
