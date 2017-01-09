@@ -41,17 +41,17 @@
             <div class="relative-pt w-clearfix">
                 <div class="entry-cell home-record">
                     <a href="/records/recordCategoryPage/{{record.category.prop}}-{{record.category.prop_count}}-{{record.category.pattern}}">
-                    {{ record.category }}
+                        {{ record.category }}
                     </a>
                 </div>
                 <div class="entry-cell home-value">
                     <a href="{{record.url_to_proof}}">
-                    {{ record.endurance_time }} </a>
+                        {{ record.endurance_time }} </a>
                 </div>
                 <div class="entry-cell home-by">
                     <a href="/records/profilePage/{{record.user.username}}">
-                    {{ record.user.first_name }}
-                    {{ record.user.last_name }} </a>
+                        {{ record.user.first_name }}
+                        {{ record.user.last_name }} </a>
                 </div>
                 <div class="entry-cell home-on">
                     {{ record.record_happened|date:"d/m/Y" }} 
@@ -61,17 +61,17 @@
         <div class="entry-mob">
             <div>
                 <a href="/records/recordCategoryPage/{{record.category.prop}}-{{record.category.prop_count}}-{{record.category.pattern}}">
-                {{ record.category }} </a>
+                    {{ record.category }} </a>
             </div>
             <div class="value-mob">
                 <a href="/records/recordCategoryPage/{{record.category.prop}}-{{record.category.prop_count}}-{{record.category.pattern}}">
-                {{ record.category }} </a>
+                    {{ record.category }} </a>
             </div>
             <div>
                 by 
                 <a href="/records/profilePage/{{record.user.username}}">
-                {{ record.user.first_name }}
-                {{ record.user.last_name }} </a>
+                    {{ record.user.first_name }}
+                    {{ record.user.last_name }} </a>
                 on
                 {{ record.record_happened|date:"d/m/Y"  }} 
             </div>

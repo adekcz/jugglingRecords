@@ -2,37 +2,37 @@
 
 
 {% block content %}
-  <div class="color-section">
+<div class="color-section">
     <h1>Login...</h1>
     <div class="container">
-      <div class="w-row">
-        <div class="column-line w-col w-col-6">
-          <h2>...with social media</h2><a class="big-button w-button" href="#">Facebook</a>
-        </div>
-        <div class="w-col w-col-6">
-          <h2>...using your e-mail</h2>
+        <div class="w-row">
+            <div class="column-line w-col w-col-6">
+                <h2>...with social media</h2><a class="big-button w-button" href="#">Facebook</a>
+            </div>
+            <div class="w-col w-col-6">
+                <h2>...using your e-mail</h2>
 
 
-          <div class="w-form">
-              <form class="narrow-form" method="post">
-e               {% csrf_token %}
-                {% load widget_tweaks %}
-                <label class="form-label" 
-                    for="{{form.username.id_for_label}}">
-                e-mail
-                </label>
-                {{ form.username|add_class:"form-text-field w-input" }}
-                <label class="form-label"
-                    for="{{form.password.id_for_label}}">
-                    {{form.password.label}}
-                </label>
-                {{ form.password|add_class:"form-text-field w-input" }}
-                <button class="big-button w-button" 
-                    data-wait="Please wait..." value="Login" type="submit">Login</button>
-            </form>
+                <div class="w-form">
+                    <form class="narrow-form" method="post">
+                        e               {% csrf_token %}
+                        {% load widget_tweaks %}
+                        <label class="form-label" 
+                            for="{{form.username.id_for_label}}">
+                            e-mail
+                        </label>
+                        {{ form.username|add_class:"form-text-field w-input" }}
+                        <label class="form-label"
+                            for="{{form.password.id_for_label}}">
+                            {{form.password.label}}
+                        </label>
+                        {{ form.password|add_class:"form-text-field w-input" }}
+                        <button class="big-button w-button" 
+                            data-wait="Please wait..." value="Login" type="submit">Login</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-  </div>
 </div>
 {% endblock %}

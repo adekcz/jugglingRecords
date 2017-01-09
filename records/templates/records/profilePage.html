@@ -76,23 +76,23 @@
                 </a>
             </div>
             <div>on {{ record.record_happened|date:"d/m/Y"  }} </div>
-                <a class="ed entrymanagement-link" href="#">edit</a>
-                <a class="de entrymanagement-link" href="#">remove</a>
-            </div>
+            <a class="ed entrymanagement-link" href="#">edit</a>
+            <a class="de entrymanagement-link" href="#">remove</a>
         </div>
-        {% endfor %}
+    </div>
+    {% endfor %}
 
-        <div class="database-line">
-            <div class="entry">
-                <div class="relative-pt">
-                    <a class="button w-button" href="/records/newRecord">add a new entry</a>
-                </div>
-            </div>
-            <div class="entry-mob">
+    <div class="database-line">
+        <div class="entry">
+            <div class="relative-pt">
                 <a class="button w-button" href="/records/newRecord">add a new entry</a>
             </div>
         </div>
-  </div>
+        <div class="entry-mob">
+            <a class="button w-button" href="/records/newRecord">add a new entry</a>
+        </div>
+    </div>
+</div>
 </div>
 
 

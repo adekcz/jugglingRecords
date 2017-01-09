@@ -2,63 +2,61 @@
 
 
 {% block content %}
-  <div class="color-section juggler">
+<div class="color-section juggler">
     <h1>New entry</h1>
     <div class="newentry-container">
-      <div class="w-form">
+        <div class="w-form">
+            <form class="narrow-form" method="post">
+                {% csrf_token %}
+                {% load widget_tweaks %}
+                <label class="form-label"
+                    for="{{form.public.id_for_label}}">
+                    {{ form.public.label }}
+                </label>
+                {{ form.public|add_class:"form-text-field w-input" }}
+                <label class="form-label"
+                    for="{{form.category.id_for_label}}">
+                    {{ form.category.label }}
+                </label>
+                {{ form.category|add_class:"form-text-field w-input" }}
+                <div class="w-row">
+                    <div class="column left w-col w-col-6 w-col-small-6">
+                        <label class="form-label" 
+                            for="{{form.endurance_time.id_for_label}}">
+                            {{ form.endurance_time.label }}
+                        </label>
+                        {{ form.endurance_time|add_class:"form-text-field w-input" }}
+                    </div>
+                    <div class="column right w-col w-col-6 w-col-small-6">
+                        <label class="form-label"
+                            for="{{form.catches.id_for_label}}">
+                            {{ form.catches.label }}
+                        </label>
+                        {{ form.catches|add_class:"form-text-field w-input" }}
+                    </div>
+                </div>
+                <label class="form-label"
+                    for="{{form.record_happened.id_for_label}}">
+                    {{ form.record_happened.label }}
+                </label>
+                {{ form.record_happened|add_class:"form-text-field w-input" }}
+                <label class="form-label"
+                    for="{{form.url_to_proof.id_for_label}}">
+                    {{ form.url_to_proof.label }}
+                </label>
+                {{ form.url_to_proof|add_class:"form-text-field w-input" }}
+                <button class="big-button w-button" 
+                    data-wait="Please wait..." value="Add" type="submit">Add</button>
+            </form>
 
 
-          <form class="narrow-form" method="post">
-            {% csrf_token %}
-            {% load widget_tweaks %}
-            <label class="form-label"
-                for="{{form.public.id_for_label}}">
-                {{ form.public.label }}
-            </label>
-            {{ form.public|add_class:"form-text-field w-input" }}
-            <label class="form-label"
-                for="{{form.category.id_for_label}}">
-                {{ form.category.label }}
-            </label>
-            {{ form.category|add_class:"form-text-field w-input" }}
-            <div class="w-row">
-                <div class="column left w-col w-col-6 w-col-small-6">
-                    <label class="form-label" 
-                        for="{{form.endurance_time.id_for_label}}">
-                        {{ form.endurance_time.label }}
-                    </label>
-                    {{ form.endurance_time|add_class:"form-text-field w-input" }}
-                </div>
-                <div class="column right w-col w-col-6 w-col-small-6">
-                    <label class="form-label"
-                        for="{{form.catches.id_for_label}}">
-                        {{ form.catches.label }}
-                    </label>
-                    {{ form.catches|add_class:"form-text-field w-input" }}
-                </div>
+            <div class="w-form-done">
+                <div>Thank you! Your submission has been received!</div>
             </div>
-            <label class="form-label"
-                for="{{form.record_happened.id_for_label}}">
-                {{ form.record_happened.label }}
-            </label>
-            {{ form.record_happened|add_class:"form-text-field w-input" }}
-            <label class="form-label"
-                for="{{form.url_to_proof.id_for_label}}">
-                {{ form.url_to_proof.label }}
-            </label>
-            {{ form.url_to_proof|add_class:"form-text-field w-input" }}
-            <button class="big-button w-button" 
-                data-wait="Please wait..." value="Add" type="submit">Add</button>
-        </form>
-
-
-        <div class="w-form-done">
-          <div>Thank you! Your submission has been received!</div>
+            <div class="w-form-fail">
+                <div>Oops! Something went wrong while submitting the form</div>
+            </div>
         </div>
-        <div class="w-form-fail">
-          <div>Oops! Something went wrong while submitting the form</div>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 {% endblock %}
