@@ -35,20 +35,40 @@ NORECAPTCHA_SECRET_KEY = KEYS["local"]["secret"]
 
 LOGGING = {
     'version': 1,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
     'handlers': {
-        'console':{
-            'level':'DEBUG',
-            'class':'logging.StreamHandler',
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': './log.log',
+            'formatter': 'simple'
         },
     },
     'loggers': {
-        'django.request': {
-            'handlers':['console'],
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
             'propagate': True,
-            'level':'DEBUG',
-        }
-    },
+        },
+    }
 }
+
+if DEBUG:
+    # make all loggers use the console.
+    for logger in LOGGING['loggers']:
+        LOGGING['loggers'][logger]['handlers'] = ['console']
 # Application definition
 
 INSTALLED_APPS = [
