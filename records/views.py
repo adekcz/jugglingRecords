@@ -13,14 +13,12 @@ from .models import UserProfile, Record, RecordCategory
 from .forms import RegisterForm, NewRecordForm, UserProfileForm, UserSimpleForm
 
 def new_entry(request):
-    """foo bar"""
     if request.method == "POST":
         form = NewRecordForm(request.POST)
         handle_new_entry_form(request, form)
     else:
         form = NewRecordForm()
 
-    print("\n\n\nahoj")
     return render(request, 'records/newRecord.html', {'form': form})
 
 def handle_new_entry_form(request, form):
@@ -32,7 +30,7 @@ def handle_new_entry_form(request, form):
 
 
 def registration(request):
-    """ not sure how to divide this method into shorter ones """
+    """ handling registration """
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -51,13 +49,6 @@ def registration(request):
         form = RegisterForm()
 
     return render(request, 'registration/register.html', {'form': form})
-
-
-def registration1(request):
-    template = loader.get_template("registration/register.html")
-    context = {"records": None}
-
-    return HttpResponse(template.render(context, request))
 
 
 def index(request, prop="all"):
