@@ -10,15 +10,17 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 from .models import UserProfile, Record, RecordCategory
-from .forms import RegisterForm, NewRecordForm
+from .forms import RegisterForm, NewRecordForm, UserProfileForm, UserSimpleForm
 
 def new_entry(request):
+    """foo bar"""
     if request.method == "POST":
         form = NewRecordForm(request.POST)
         handle_new_entry_form(request, form)
     else:
         form = NewRecordForm()
 
+    print("\n\n\nahoj")
     return render(request, 'records/newRecord.html', {'form': form})
 
 def handle_new_entry_form(request, form):
@@ -27,6 +29,7 @@ def handle_new_entry_form(request, form):
         new_record.user = request.user
         new_record.save()
         return HttpResponseRedirect("/records/profilePage/"+request.user.username)
+
 
 def registration(request):
     """ not sure how to divide this method into shorter ones """
@@ -100,20 +103,27 @@ def record_category_page(request, prop, prop_count, pattern):
 def login_page(request):
     template = loader.get_template("records/base.html")
     context = {}
-
     return HttpResponse(template.render(context, request))
-   # username = request.POST['username']
-   # password = request.POST['password']
-   # user = authenticate(username=username, password=password)
-   # if user is not None:
-   #     login(request, user)
-   #     # Redirect to a success page.
-   #     ...
-   # else:
-   #     # Return an 'invalid login' error message.
-   #     ...
 
 def account_settings(request):
-    return render(request, 'records/accountSettings.html', None)
+    return handle_edit_user_form(request)
 
+def handle_edit_user_form(request):
+    """ not sure how to divide this method into shorter ones """
+    current_user = User.objects.get(username=request.user)
+    current_userprofile = current_user.userprofile
+    if request.method == "POST":
+        user_simple_form = UserSimpleForm(request.POST, instance=current_user)
+        user_profile_form = UserProfileForm(request.POST, instance=current_userprofile)
+        if user_simple_form.is_valid():
+            user_simple_form.save()
+
+        if user_profile_form.is_valid():
+            user_profile_form.save()
+    else:
+        user_simple_form = UserSimpleForm(instance=current_user)
+        user_profile_form = UserProfileForm(instance=current_userprofile)
+
+    forms = {'user_simple_form': user_simple_form, 'user_profile_form': user_profile_form}
+    return render(request, 'records/accountSettings.html', forms)
 #The login_required decorator¶

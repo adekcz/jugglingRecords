@@ -5,6 +5,38 @@
     <div class="newentry-container">
         <div class="w-form">
             <form data-name="Email Form" id="email-form" name="email-form">
+                {% csrf_token %}
+                {% load widget_tweaks %}
+                <div class="w-row">
+                    <div class="column left w-col w-col-6 w-col-small-6">
+                        <label class="form-label" 
+                            for="{{form.first_name.id_for_label}}">
+                            {{ form.first_name.label }}
+                        </label>
+                        {{ form.first_name|add_class:"form-text-field w-input" }}
+                    </div>
+                    <div class="column right w-col w-col-6 w-col-small-6">
+                        <label class="form-label"
+                            for="{{form.last_name.id_for_label}}">
+                            {{ form.last_name.label }}
+                        </label>
+                        {{ form.last_name|add_class:"form-text-field w-input" }}
+                    </div>
+                </div>
+                        <label class="form-label"
+                            for="{{form1.info_url.id_for_label}}">
+                            {{ form1.info_url.label }}
+                        </label>
+                        {{ form1.info_url|add_class:"form-text-field w-input" }}
+                <label class="form-label" for="url-2">url</label>
+                <input class="form-text-field w-input" data-name="Url 2" id="url-2" maxlength="256" name="url-2" placeholder="https://youtu.be/uNss0KZr9dc" type="text">
+                <input class="big-button w-button" data-wait="Please wait..." type="submit" value="Update">
+            </form>
+
+
+
+
+            <form data-name="Email Form" id="email-form" name="email-form">
                 <div class="w-row">
                     <div class="column left w-col w-col-6 w-col-small-6">
                         <label class="form-label" for="fn">first name</label>
@@ -26,6 +58,13 @@
                 <div>Oops! Something went wrong while submitting the form</div>
             </div>
         </div>
+    </div>
+    <div class="newentry-container">
+        <form class="narrow-form" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form>
     </div>
 </div>
 {% endblock content %}
