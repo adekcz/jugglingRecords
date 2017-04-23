@@ -1,7 +1,7 @@
 """Controller methods"""
 from django.http import HttpResponse
 from django.template import loader
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -9,8 +9,21 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
+from django.views.generic import DeleteView
+from django.core.exceptions import PermissionDenied
+
 from .models import UserProfile, Record, RecordCategory
-from .forms import RegisterForm, NewRecordForm, UserProfileForm, UserSimpleForm
+from .forms import RegisterForm, NewRecordForm, UserProfileForm, UserSimpleForm, RecordsFilterForm
+
+
+class PermissionMixin(object):
+
+    def get_object(self, *args, **kwargs):
+        obj = super(PermissionMixin, self).get_object(*args, **kwargs)
+        if not obj.user == self.request.user:
+            raise PermissionDenied()
+        else:
+            return obj
 
 def new_entry(request):
     if request.method == "POST":
@@ -18,6 +31,18 @@ def new_entry(request):
         handle_new_entry_form(request, form)
     else:
         form = NewRecordForm()
+
+    return render(request, 'records/newRecord.html', {'form': form})
+
+def edit_entry(request, key):
+    """ lalala """
+    record = Record.objects.get(pk=key)
+    if request.method == "POST":
+        form = NewRecordForm(request.POST, instance=record)
+        if form.is_valid():
+            form.save()
+    else:
+        form = NewRecordForm(instance=record)
 
     return render(request, 'records/newRecord.html', {'form': form})
 
@@ -51,21 +76,50 @@ def registration(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
-def index(request, prop="all"):
-    world_records = handle_filters(prop)
-    template = loader.get_template("records/index.html")
-    context = {"records": world_records, "props": RecordCategory.PROPS_CHOICES}
+def index(request):
+    """ lalala """
+    world_records = None
+    prop = "ALL_PROPS"
+    record_type = "ALL_TYPES"
+    if request.method == "POST":
+        form = RecordsFilterForm(request.POST)
+        if form.is_valid():
+            print("\n\n\nAAAA")
+            print(form)
+            prop = form.cleaned_data['prop']
+            record_type = form.cleaned_data['record_type']
+            print(prop)
+            print(record_type)
+            world_records = handle_filters(prop, record_type)
 
+    if world_records is None:
+        form = RecordsFilterForm()
+        world_records = handle_filters()
+
+    template = loader.get_template("records/index.html")
+    context = {"records": world_records, "props": RecordCategory.PROPS_CHOICES,
+            "types": RecordCategory.RECORD_TYPE_CHOICES, "form":form, "selected_prop":prop, "selected_record_type":record_type}
+
+    print("\ncontext:")
+    print(context)
+    print("testingWhatWasSelected")
+    print()
     return HttpResponse(template.render(context, request))
 
-def handle_filters(prop):
+#todo change hardcoded mess for values
+def handle_filters(prop="ALL_PROPS", record_type="ALL_TYPES"):
     """"returns list of world_records for index page based on various filters on page"""
     world_records = []
     categories = []
-    if prop == "all":
+    #TODO this is ugly
+    if prop == "ALL_PROPS" and record_type == "ALL_TYPES":
         categories = RecordCategory.objects.all()
-    else:
+    elif prop == "ALL_PROPS":
+        categories = RecordCategory.objects.filter(record_type=record_type)
+    elif record_type == "ALL_TYPES":
         categories = RecordCategory.objects.filter(prop=prop)
+    else:
+        categories = RecordCategory.objects.filter(prop=prop).filter(record_type=record_type)
     for category in categories:
         records = Record.objects.filter(category=category).order_by('endurance_time')
         if records != None:
@@ -117,4 +171,7 @@ def handle_edit_user_form(request):
 
     forms = {'user_simple_form': user_simple_form, 'user_profile_form': user_profile_form}
     return render(request, 'records/accountSettings.html', forms)
-#The login_required decorator¶
+
+class RecordDelete(PermissionMixin, DeleteView):
+    model = Record
+    success_url = reverse_lazy('accountSettings')

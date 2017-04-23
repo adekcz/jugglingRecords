@@ -1,8 +1,9 @@
 """Contains forms used in application"""
 from django.contrib.auth.models import User
-from django.forms import ModelForm
+from django.forms import ModelForm, RadioSelect
 from nocaptcha_recaptcha.fields import NoReCaptchaField
-from .models import Record, UserProfile
+
+from .models import Record, UserProfile, RecordCategory
 
 
 class RegisterForm(ModelForm):
@@ -31,3 +32,13 @@ class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
         fields = ('info_url', )
+
+class RecordsFilterForm(ModelForm):
+    """Form for edit user setting form"""
+    class Meta:
+        model = RecordCategory
+        fields = ('prop', 'record_type', )
+        widgets = {'prop': RadioSelect(
+            attrs={'onclick': 'this.form.submit()', 'onChange': 'this.form.submit();', "class":"rb w-radio-input"}),
+                   'record_type': RadioSelect(
+                       attrs={'onChange': 'this.form.submit();', "class":"rb w-radio-input"})}

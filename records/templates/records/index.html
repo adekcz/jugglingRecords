@@ -2,19 +2,79 @@
 {% block content %}
 <div class="color-section">
     <h1>World Records</h1>
-    <div class="filter-line">
-        <div class="filter-text">Props:</div>
-        {% spaceless %}
-        <a class="button stick w-button" href="/records/index-all">all</a>
-        {% for choice in props %}
-        <a class="button stick w-button" href="/records/index-{{choice.0}}">{{choice.1}}</a>
-        {% endfor %}
-        {% endspaceless %}
+
+    <div class="form-wrapper w-form">
+        <form class="radio-button-form" action="/records/" method="post">
+            {% csrf_token %}
+            {% load widget_tweaks %} 
+            {% for subform in form %}
+                <div class="filter-line stick">
+                <div class="filter-text">{{subform.label}}:</div>
+                {% for radio in subform %}
+                <div class="radio-button w-clearfix w-radio">
+                        {%render_field radio.tag %} {% comment %} classes are set in forms.py {% endcomment %}
+                        <label class="record-filter-form-label w-form-label" for="radio">{{radio.choice_label}}</label>
+                    </div>
+                {% endfor %}
+                </div>
+            {% endfor %}
+        </form>
     </div>
-    <div class="filter-line">
-        <div class="filter-text">Type:</div>
-        <a class="button stick w-button" href="/records/index-all">all</a><a class="button stick w-button" href="#">plain endurance</a><a class="button stick w-button" href="#">trick endurance</a>
+
+
+
+    <script type='text/javascript'>
+        var selectedProp = $("input[value='{{selected_prop}}']");
+        var selectedType = $("input[value='{{selected_record_type}}']");
+        selectedProp.closest("div").addClass("active");
+        selectedType.closest("div").addClass("active");
+        $('.record-filter-form-label').click(function(){
+            $(this).prev().attr('checked', true);
+            $(this).closest("form").submit();
+
+
+
+        });
+
+
+
+    </script>
+
+    <div class="filter-line stick">
+      <div class="filter-text">Endurance type:</div>
+      <div class="form-wrapper w-form">
+        <form class="radio-button-form" data-name="Email Form" id="email-form" name="email-form">
+          <div class="left radio-button w-clearfix w-radio">
+            <input class="rb w-radio-input" data-name="Radio 2" id="radio" name="radio-2" type="radio" value="Radio">
+            <label class="w-form-label" for="radio">all</label>
+          </div>
+          <div class="active radio-button w-clearfix w-radio">
+            <input class="rb w-radio-input" data-name="Radio 2" id="radio" name="radio-2" type="radio" value="Radio">
+            <label class="w-form-label" for="radio">plain</label>
+          </div>
+          <div class="radio-button w-clearfix w-radio">
+            <input class="rb w-radio-input" data-name="Radio 2" id="radio" name="radio-2" type="radio" value="Radio">
+            <label class="w-form-label" for="radio">trick</label>
+          </div>
+          <div class="radio-button right w-clearfix w-radio">
+            <input class="rb w-radio-input" data-name="Radio 2" id="radio" name="radio-2" type="radio" value="Radio">
+            <label class="w-form-label" for="radio">constrained</label>
+          </div>
+        </form>
+        <div class="w-form-done">
+          <div>Thank you! Your submission has been received!</div>
+        </div>
+        <div class="w-form-fail">
+          <div>Oops! Something went wrong while submitting the form</div>
+        </div>
+      </div>
     </div>
+
+
+
+
+
+
     <div class="database-line title">
         <div class="entry">
             <div class="relative-pt w-clearfix">
@@ -55,6 +115,7 @@
                 </div>
                 <div class="entry-cell home-on">
                     {{ record.record_happened|date:"d/m/Y" }} 
+                    {{ record.record_happened }} 
                 </div>
             </div>
         </div>

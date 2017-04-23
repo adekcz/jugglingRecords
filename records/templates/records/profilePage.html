@@ -44,8 +44,14 @@
         <div class="entry w-clearfix">
             <div class="absolute-left-pt"></div>
             <div class="manageButtons absolute-right-pt">
-                <a class="ed entrymanagement-link" href="new-entry.html">edit</a>
-                <a class="de entrymanagement-link" href="#">remove</a>
+                {% if user.is_authenticated and user.username == userProfile.user.username %}
+                    <a class="ed entrymanagement-link" href="/records/editRecord/{{record.pk}}">edit</a>
+
+                    <form action="{% url 'entry_delete' record.pk %}" method="post">
+                        {% csrf_token %}
+                        <input class="submitLink de entrymanagement-link" type="submit" value="remove" />
+                    </form>
+                {% endif %}
             </div>
             <div class="relative-pt w-clearfix">
                 <div class="entry-cell juggler-record">

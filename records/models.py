@@ -6,7 +6,6 @@ from django.db import models
 
 from django.contrib.auth.models import User
 
-
 def urlize(string):
     return string.replace(" ", "-")
 
@@ -21,11 +20,13 @@ class UserProfile(models.Model):
 
 class RecordCategory(models.Model):
     """Model for record categories"""
+    ALL_PROPS = 'ALL_PROPS'
     BALLS = 'BALLS'
     BBALLS = 'BBALLS'
     CLUBS = 'CLUBS'
     RINGS = 'RINGS'
     PROPS_CHOICES = (
+        (ALL_PROPS, 'All'),
         (BALLS, 'Balls'),
         (BBALLS, 'Bouncing Balls'),
         (CLUBS, 'Clubs'),
@@ -35,6 +36,22 @@ class RecordCategory(models.Model):
         max_length=10,
         choices=PROPS_CHOICES,
         default=BALLS,
+    )
+    ALL_TYPES = 'ALL_TYPES'
+    ENDURANCE = 'ENDURANCE'
+    TRICK = 'TRICK'
+    CONSTRAIN = 'CONSTRAIN'
+    RECORD_TYPE_CHOICES = (
+        (ALL_TYPES, 'all'),
+        (ENDURANCE, 'plain endurance'),
+        (TRICK, 'trick endurance'),
+        (CONSTRAIN, 'constrained'),
+    )
+
+    record_type = models.CharField(
+        max_length=10,
+        choices=RECORD_TYPE_CHOICES,
+        default=ALL_TYPES,
     )
     prop_count = models.IntegerField()
     pattern = models.CharField(
