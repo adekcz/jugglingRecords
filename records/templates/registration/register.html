@@ -38,6 +38,12 @@
                             {{ form.email.label }}
                         </label>
                         {{ form.email|add_class:"form-text-field w-input" }}
+                        <label class="form-label"
+                            for"{{form.password.id_for_label}}">
+                            {{ form.password.label }}    
+                        </label>
+                        {{ form.password|add_class:"form-text-field w-input" }} 
+                        <input type="checkbox" onchange="document.getElementById('{{ form.password.id_for_label }}').type = this.checked ? 'text' : 'password'"> Show password
                         {{ form.captcha|add_class:"form-text-field w-input" }}
                         <button class="big-button w-button" 
                             data-wait="Please wait..." value="Register" type="submit">Register</button>

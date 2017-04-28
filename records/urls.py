@@ -16,7 +16,11 @@ urlpatterns = [ #pylint: disable=invalid-name
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^register/$', views.registration, name='register'),
     url(r'^newRecord/$', views.new_entry, name='newRecord'),
+    url(r'^newRecord/(?P<category_id>\d+)/$', views.new_entry, name='newRecord'),
     url(r'^editRecord/(\d+)$', views.edit_entry, name='editRecord'),
+    url(r'^showRecord/(\d+)$', views.edit_entry, name='showRecord'),
+    url(r'^showRecord/$', views.edit_entry, name='showRecord'),
+    url(r'^newCategory/$', views.new_category, name='newCategory'),
     url(r'^accountSettings/$', views.account_settings, name='accountSettings'),
     url(r'^deleteRecord/(?P<pk>\d+)/$', views.RecordDelete.as_view(), name='entry_delete'),
     ]

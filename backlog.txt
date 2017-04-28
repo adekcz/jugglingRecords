@@ -5,6 +5,9 @@ meta tags in header from stylized
 
 sharovani rekordu
 na mypage sdruzit rekordy stejne kategorie
+
+registrovany uzivatel by nemel videt register page ani po pristupu pres odkaz
+
 https://google.github.io/styleguide/pyguide.html
 
 

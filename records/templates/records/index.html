@@ -1,5 +1,23 @@
 {% extends "records/base.html" %}
 {% block content %}
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '347520742300159',
+      xfbml      : true,
+      version    : 'v2.9'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 <div class="color-section">
     <h1>World Records</h1>
 
@@ -24,55 +42,29 @@
 
 
     <script type='text/javascript'>
-        var selectedProp = $("input[value='{{selected_prop}}']");
-        var selectedType = $("input[value='{{selected_record_type}}']");
-        selectedProp.closest("div").addClass("active");
-        selectedType.closest("div").addClass("active");
-        $('.record-filter-form-label').click(function(){
-            $(this).prev().attr('checked', true);
-            $(this).closest("form").submit();
+$( document ).ready( function(){ 
+    $('.share-button').on("click", function() {
+//TODO replace with dynamic code
+        var hrefValue = 'http://localhost:8000/' + '{% url "showRecord" %}' + $(this).data("record-id");
+      FB.ui({
+        method: 'share',
+        display: 'popup',
+        href: hrefValue,
+      }, function(response){
+      console.log(response);
+      });
+    });
 
-
-
-        });
-
-
-
+    var selectedProp = $("input[value='{{selected_prop}}']");
+    var selectedType = $("input[value='{{selected_record_type}}']");
+    selectedProp.closest("div").addClass("active");
+    selectedType.closest("div").addClass("active");
+    $('.record-filter-form-label').click(function(){
+        $(this).prev().attr('checked', true);
+        $(this).closest("form").submit();
+    });
+} );
     </script>
-
-    <div class="filter-line stick">
-      <div class="filter-text">Endurance type:</div>
-      <div class="form-wrapper w-form">
-        <form class="radio-button-form" data-name="Email Form" id="email-form" name="email-form">
-          <div class="left radio-button w-clearfix w-radio">
-            <input class="rb w-radio-input" data-name="Radio 2" id="radio" name="radio-2" type="radio" value="Radio">
-            <label class="w-form-label" for="radio">all</label>
-          </div>
-          <div class="active radio-button w-clearfix w-radio">
-            <input class="rb w-radio-input" data-name="Radio 2" id="radio" name="radio-2" type="radio" value="Radio">
-            <label class="w-form-label" for="radio">plain</label>
-          </div>
-          <div class="radio-button w-clearfix w-radio">
-            <input class="rb w-radio-input" data-name="Radio 2" id="radio" name="radio-2" type="radio" value="Radio">
-            <label class="w-form-label" for="radio">trick</label>
-          </div>
-          <div class="radio-button right w-clearfix w-radio">
-            <input class="rb w-radio-input" data-name="Radio 2" id="radio" name="radio-2" type="radio" value="Radio">
-            <label class="w-form-label" for="radio">constrained</label>
-          </div>
-        </form>
-        <div class="w-form-done">
-          <div>Thank you! Your submission has been received!</div>
-        </div>
-        <div class="w-form-fail">
-          <div>Oops! Something went wrong while submitting the form</div>
-        </div>
-      </div>
-    </div>
-
-
-
-
 
 
     <div class="database-line title">
@@ -97,7 +89,19 @@
 <div class="database-section">
     {% for record in records %}
     <div class="database-line yellow">
-        <div class="entry">
+        <div class="entry w-clearfix">
+            <div class="absolute-right-pt">
+              <div class="w-dropdown" data-delay="0" style="z-index: 901;">
+                <div class="entry-settings w-dropdown-toggle w--open">
+                  <div>↓</div>
+                </div>
+                <nav class="dropdown-list entryd w-dropdown-list">
+                    <a class="dropdown-link w-dropdown-link" href="{{record.url_to_proof}}">show video</a>
+                    <a class="share-button dropdown-link w-dropdown-link" data-record-id="{{record.id}}" href="#">share on Facebook</a>
+                  <a class="dropdown-link w-dropdown-link" href="#">incorrect entry</a>
+                </nav>
+              </div>
+            </div>
             <div class="relative-pt w-clearfix">
                 <div class="entry-cell home-record">
                     <a href="/records/recordCategoryPage/{{record.category.prop}}-{{record.category.prop_count}}-{{record.category.pattern}}">

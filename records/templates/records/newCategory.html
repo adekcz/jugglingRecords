@@ -1,0 +1,26 @@
+{% extends 'records/base.html' %}
+
+
+{% block content %}
+<div class="color-section juggler">
+    <h1>New entry</h1>
+    <div class="newentry-container">
+        <div class="w-form">
+            <form class="narrow-form" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button class="big-button w-button" 
+                    data-wait="Please wait..." value="Add" type="submit">Add</button>
+            </form>
+
+
+            <div class="w-form-done">
+                <div>Thank you! Your submission has been received!</div>
+            </div>
+            <div class="w-form-fail">
+                <div>Oops! Something went wrong while submitting the form</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

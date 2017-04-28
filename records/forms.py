@@ -1,6 +1,6 @@
 """Contains forms used in application"""
 from django.contrib.auth.models import User
-from django.forms import ModelForm, RadioSelect
+from django.forms import ModelForm, RadioSelect, PasswordInput
 from nocaptcha_recaptcha.fields import NoReCaptchaField
 
 from .models import Record, UserProfile, RecordCategory
@@ -11,7 +11,8 @@ class RegisterForm(ModelForm):
     captcha = NoReCaptchaField()
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('first_name', 'last_name', 'email', 'password')
+        widgets = {'password': PasswordInput()}
 
 
 class NewRecordForm(ModelForm):
@@ -20,6 +21,12 @@ class NewRecordForm(ModelForm):
         model = Record
         fields = ('public', 'category', 'catches',
                   'endurance_time', 'record_happened', 'url_to_proof')
+
+class NewRecordCategoryForm(ModelForm):
+    """Form for newRecord"""
+    class Meta:
+        model = RecordCategory
+        fields = ('prop', 'record_type', 'prop_count', 'pattern', )
 
 class UserSimpleForm(ModelForm):
     """Form for registration page"""
@@ -39,6 +46,8 @@ class RecordsFilterForm(ModelForm):
         model = RecordCategory
         fields = ('prop', 'record_type', )
         widgets = {'prop': RadioSelect(
-            attrs={'onclick': 'this.form.submit()', 'onChange': 'this.form.submit();', "class":"rb w-radio-input"}),
-                   'record_type': RadioSelect(
-                       attrs={'onChange': 'this.form.submit();', "class":"rb w-radio-input"})}
+            attrs={'onclick': 'this.form.submit()',
+                   'onChange': 'this.form.submit();',
+                   "class":"rb w-radio-input"}),
+                   'record_type': RadioSelect(attrs={
+                       'onChange': 'this.form.submit();', "class":"rb w-radio-input"})}

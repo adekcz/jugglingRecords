@@ -13,7 +13,8 @@ from django.views.generic import DeleteView
 from django.core.exceptions import PermissionDenied
 
 from .models import UserProfile, Record, RecordCategory
-from .forms import RegisterForm, NewRecordForm, UserProfileForm, UserSimpleForm, RecordsFilterForm
+from .forms import RegisterForm, NewRecordForm, UserProfileForm
+from .forms import UserSimpleForm, RecordsFilterForm, NewRecordCategoryForm
 
 
 class PermissionMixin(object):
@@ -25,12 +26,20 @@ class PermissionMixin(object):
         else:
             return obj
 
-def new_entry(request):
+def new_entry(request, category_id=None):
     if request.method == "POST":
         form = NewRecordForm(request.POST)
-        handle_new_entry_form(request, form)
+        response = handle_new_entry_form(request, form)
+        if response != None:
+            return response
     else:
-        form = NewRecordForm()
+        if category_id != None:
+            category = RecordCategory.objects.get(pk=category_id)
+            record = Record()
+            record.category = category
+            form = NewRecordForm(instance=record)
+        else:
+            form = NewRecordForm()
 
     return render(request, 'records/newRecord.html', {'form': form})
 
@@ -53,6 +62,24 @@ def handle_new_entry_form(request, form):
         new_record.save()
         return HttpResponseRedirect("/records/profilePage/"+request.user.username)
 
+def new_category(request):
+    if request.method == "POST":
+        form = NewRecordCategoryForm(request.POST)
+        response = handle_new_category_form(form)
+        if response != None:
+            return response
+    else:
+        form = NewRecordCategoryForm()
+
+    return render(request, 'records/newCategory.html', {'form': form})
+
+def handle_new_category_form(form):
+    if form.is_valid():
+        created_category = RecordCategory(**form.cleaned_data)
+        created_category.save()
+        print("should redirect to:")
+        print("/records/newRecord/"+str(created_category.id))
+        return HttpResponseRedirect("/records/newRecord/"+str(created_category.id))
 
 def registration(request):
     """ handling registration """
@@ -60,11 +87,11 @@ def registration(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data["email"]
-            default_password = "changeit"
-            new_user = User.objects.create_user(username, username, default_password)
+            password = form.cleaned_data["password"]
+            new_user = User.objects.create_user(username, username, password)
             new_user.save()
 
-            new_user = authenticate(username=username, password=default_password)
+            new_user = authenticate(username=username, password=password)
             login(request, new_user)
 
             UserProfile.objects.create(user=new_user)
@@ -98,7 +125,8 @@ def index(request):
 
     template = loader.get_template("records/index.html")
     context = {"records": world_records, "props": RecordCategory.PROPS_CHOICES,
-            "types": RecordCategory.RECORD_TYPE_CHOICES, "form":form, "selected_prop":prop, "selected_record_type":record_type}
+               "types": RecordCategory.RECORD_TYPE_CHOICES, "form":form,
+               "selected_prop":prop, "selected_record_type":record_type}
 
     print("\ncontext:")
     print(context)
@@ -122,7 +150,7 @@ def handle_filters(prop="ALL_PROPS", record_type="ALL_TYPES"):
         categories = RecordCategory.objects.filter(prop=prop).filter(record_type=record_type)
     for category in categories:
         records = Record.objects.filter(category=category).order_by('endurance_time')
-        if records != None:
+        if records != None and len(records) > 0:
             world_records.append(records[0])
     return world_records
 
